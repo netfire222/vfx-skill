@@ -23,7 +23,7 @@ brew install ffmpeg node
 pip3 install numpy pillow fonttools python-bidi ai-edge-litert "opencv-python-headless<5"
 ```
 
-המדריך המלא בעברית: https://www.netaneles.com/skill-efektim-reels/
+המדריך המלא בעברית: https://www.netaneles.com/claude-reels-vfx-skill/
 
 ⭐ אם הסקיל עזר לכם, תנו לו כוכב (Star) בראש העמוד. זה עוזר לאנשים נוספים למצוא אותו.
 
