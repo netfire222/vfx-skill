@@ -42,6 +42,7 @@ Big titles are drawn **behind the speaker** (person segmentation) and auto-place
    ```
    Strike variant (plan.json only): `"front_first": true` puts the first word ON the face, in front of the speaker,
    and the swap word BEHIND the head (e.g. "מלפנים" -> "מאחור"); `"overlap": 0.45` hides more of it behind the head.
+   Echo variant (plan.json): `"linger": true` keeps the outline copies on screen (gently breathing) until the effect ends.
    Options: `--y` (fixed title height, fraction of frame; raise it if the head hides letters), `--color`,
    freeze-mark `--x --y --r` to circle something else, `--seg fast|quality`, `--crf`.
 4. Showcase (optional): `python3 scripts/compose.py fx.mp4 final.mp4 schedule.json`

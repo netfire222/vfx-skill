@@ -316,8 +316,9 @@ class Strike(Effect):
 
 class Echo(Effect):
     needs_mask = True
-    def __init__(self, W, H, text, at, dur=2.5, y=None, color="#F2ECE2", copies=4, **o):
+    def __init__(self, W, H, text, at, dur=2.5, y=None, color="#F2ECE2", copies=4, linger=False, **o):
         super().__init__(W, H); self.start, self.end, self.y = at, at + dur, y
+        self.linger = bool(linger)   # keep the outline copies on screen until the effect ends
         t, f = fit_title(text, W, H)
         rgb = hex_rgb(color); sw = max(2, f.size // 45)
         self.solid = text_block(t, f, rgb + (255,), tight=True)
@@ -331,7 +332,12 @@ class Echo(Effect):
         rel = t - self.start; out = 1 - prog(t, self.end - 0.25, 0.25)
         gap = self.solid.height * 0.38
         for k in range(self.n, 0, -1):                      # echoes burst out, then fade
-            p = ease_out_cubic(prog(rel, 0.05 * k, 0.45)); a = (1 - prog(rel, 0.35 + 0.06 * k, 0.5)) * (1 - k / (self.n + 1))
+            p = ease_out_cubic(prog(rel, 0.05 * k, 0.45))
+            if self.linger:
+                p *= 1 + 0.04 * math.sin(rel * 3.2 + k)          # gentle breathing while they stay
+                a = (1 - k / (self.n + 1)) * 0.85
+            else:
+                a = (1 - prog(rel, 0.35 + 0.06 * k, 0.5)) * (1 - k / (self.n + 1))
             if a <= 0.01 or p <= 0: continue
             for sgn in (-1, 1):
                 paste_center(c, with_alpha(self.ghost, a * out), self.W / 2, self.cy + sgn * gap * k * p * 0.55)
